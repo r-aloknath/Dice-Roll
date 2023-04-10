@@ -22,6 +22,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import { PropsWithChildren } from 'react';
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import DiceOne from '../assets/One.png'
 import DiceTwo from '../assets/Two.png'
@@ -29,6 +30,11 @@ import DiceThree from '../assets/Three.png'
 import DiceFour from '../assets/Four.png'
 import DiceFive from '../assets/Five.png'
 import DiceSix from '../assets/Six.png'
+
+const options = {
+  enableVibrateFallback: true,
+  ignoreAndroidSystemSettings: true,
+};
 
 type DiceProps = PropsWithChildren<{
   imageUrl: ImageSourcePropType
@@ -45,6 +51,7 @@ const Dice = ({imageUrl}:DiceProps): JSX.Element => {
 function App(): JSX.Element {
  const [diceImage, setDiceImage] = useState<ImageSourcePropType>(DiceOne)
  const rollDiceOnTap = () => {
+   
   let randomNumber = Math.floor(Math.random() * 6) + 1;
 
   switch (randomNumber) {
@@ -76,6 +83,8 @@ function App(): JSX.Element {
       setDiceImage(DiceOne)
       break;
   }
+
+  ReactNativeHapticFeedback.trigger("impactHeavy", options); 
  }
   return (
     <View style={styles.container}>
